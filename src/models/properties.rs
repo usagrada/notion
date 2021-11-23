@@ -239,10 +239,17 @@ pub enum RollupValue {
 }
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
+#[serde(tag = "type")]
 pub struct FileReference {
     pub name: String,
-    pub url: String,
-    pub mime_type: String,
+    pub external: Option<FileValue>,
+    pub file: Option<FileValue>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
+pub struct FileValue {
+    url: String,
+    expiry_time: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
