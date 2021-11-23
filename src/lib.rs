@@ -203,4 +203,28 @@ impl NotionApi {
             response => Err(Error::UnexpectedResponse { response }),
         }
     }
+
+    pub async fn query_database_by_str<T>(
+        &self,
+        database_id: &str,
+        query: T,
+    ) -> Result<ListResponse<Page>, Error>
+    where
+        T: Into<DatabaseQuery>,
+    {
+        let result = self
+            .make_json_request(
+                self.client
+                    .post(&format!(
+                        "https://api.notion.com/v1/databases/{}/query",
+                        database_id
+                    ))
+                    .json(&query.into()),
+            )
+            .await?;
+        match result {
+            Object::List { list } => Ok(list.expect_pages()?),
+            response => Err(Error::UnexpectedResponse { response }),
+        }
+    }
 }
