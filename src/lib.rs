@@ -227,4 +227,21 @@ impl NotionApi {
             response => Err(Error::UnexpectedResponse { response }),
         }
     }
+
+    pub async fn patch_page<T>(&self, page_id: &str, query: T) -> Result<Page, Error>
+    where
+        T: Into<serde_json::Value>,
+    {
+        let result = self
+            .make_json_request(
+                self.client
+                    .patch(&format!("https://api.notion.com/v1/pages/{}", page_id))
+                    .json(&query.into()),
+            )
+            .await?;
+        match result {
+            Object::Page { page } => Ok(page),
+            response => Err(Error::UnexpectedResponse { response }),
+        }
+    }
 }
