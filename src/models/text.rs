@@ -47,7 +47,7 @@ pub struct RichTextCommon {
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct Link {
-    pub url: String,
+    pub url: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]

@@ -248,7 +248,7 @@ pub struct FileReference {
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct FileValue {
-    url: String,
+    url: Option<String>,
     expiry_time: Option<String>,
 }
 
@@ -313,7 +313,7 @@ pub enum PropertyValue {
     },
     Url {
         id: PropertyId,
-        url: String,
+        url: Option<String>,
     },
     Email {
         id: PropertyId,
