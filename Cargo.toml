@@ -1,6 +1,6 @@
 [package]
 name = "notion"
-version = "0.3.1-alpha.0"
+version = "0.3.2"
 authors = ["Jake Swenson <jake@jakeswenson.com>"]
 edition = "2018"
 repository = "https://github.com/jakeswenson/notion"
@@ -12,7 +12,7 @@ license = "MIT"
 [dependencies]
 serde_json = "1.0"
 thiserror = "1.0"
-tracing = "0.1.26"
+tracing = "0.1"
 
 [dependencies.chrono]
 version = "0.4"
@@ -34,7 +34,7 @@ features = ["derive"]
 cargo-husky = "1"
 wiremock = "0.5.2"
 anyhow = "1.0.40"
-clap = "3.0.0-beta.2"
+clap = { version = "3.0.0-rc.1", features = ["derive"] }
 skim = "0.9.4"
 crossbeam-channel = "0.5"
 toml = "0.5.8"
