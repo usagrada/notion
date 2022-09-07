@@ -1,3 +1,6 @@
+use crate::models::properties::DateValue;
+use crate::models::users::User;
+use crate::{Database, Page};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Copy, Clone)]
@@ -56,6 +59,33 @@ pub struct Text {
     pub link: Option<Link>,
 }
 
+/// See https://developers.notion.com/reference/rich-text#mention-objects
+#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
+#[serde(tag = "type")]
+#[serde(rename_all = "snake_case")]
+pub enum MentionObject {
+    User {
+        user: User,
+    },
+    // TODO: need to add tests
+    Page {
+        page: Page,
+    },
+    // TODO: need to add tests
+    Database {
+        database: Database,
+    },
+    Date {
+        date: DateValue,
+    },
+    // TODO: need to add LinkPreview
+    // LinkPreview {
+    //
+    // },
+    #[serde(other)]
+    Unknown,
+}
+
 /// Rich text objects contain data for displaying formatted text, mentions, and equations.
 /// A rich text object also contains annotations for style information.
 /// Arrays of rich text objects are used within property objects and property
@@ -74,6 +104,7 @@ pub enum RichText {
     Mention {
         #[serde(flatten)]
         rich_text: RichTextCommon,
+        mention: MentionObject,
     },
     /// See <https://developers.notion.com/reference/rich-text#equation-objects>
     Equation {
